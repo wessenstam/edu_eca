@@ -96,7 +96,7 @@ def deploy_cluster(server_ip,user,passwd):
     # 3. Upload the images
     source_ip = "10.42.11.100"
 
-    images = ("CentOS-7-x86_64-DVD-1908.iso","CentOS.qcow2","CubicDesignTools.iso","ECA_5.15.tar","move-3.4.1.qcow2","Nutanix-VirtIO-1.1.5.iso","Windows 2012 R2 Server.iso","Windows2012R2.qcow2")
+    images = ("CentOS-7-x86_64-DVD-1908.iso","CentOS.qcow2","CubicDesignTools.iso","move-3.4.1.qcow2","Nutanix-VirtIO-1.1.5.iso","Windows 2012 R2 Server.iso","Windows2012R2.qcow2")
     for image_check in sorted(images):
         if "qcow2" in str(image_check):
             image_type="DISK_IMAGE"
@@ -137,9 +137,9 @@ urllib3.disable_warnings()
 file=open("cluster.txt","r")
 file_line=file.readlines()
 for line in file_line:
-    if "#" not in line:
+    if not line.startswith("#"):
         line_dict=line.split("|")
         server_ip_var=line_dict[0]
         user_name='admin'
-        passwd_var=line_dict[1]
-        checks_to_run(server_ip_var,user_name,passwd_var)
+        passwd_var=line_dict[1].strip('\n')
+        deploy_cluster(server_ip_var,user_name,passwd_var)
