@@ -99,3 +99,5 @@ for line in file_line:
             response=get_json_data(server_address, get_url, json_data, method, user_name, passwd, value)
             if "True" in response:
                 print("Password changed to "+passwd_var+" on PC "+server_address)
+            else:
+                print("Password not changed to " + passwd_var + " on PC " + server_address+"! Please check using the GUI!")
