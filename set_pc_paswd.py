@@ -80,6 +80,7 @@ urllib3.disable_warnings()
 # Use a file with parameters to run the checks
 file=open("cluster.txt","r")
 file_line=file.readlines()
+server_run_list=[]
 for line in file_line:
     if not line.startswith("#"):
         line_dict=line.split("|")
@@ -87,13 +88,14 @@ for line in file_line:
         server_address="10.42.11.7"+str(server_ip_var.split(".")[2][1:])
         user_name='admin'
         passwd_var=line_dict[1].strip('\n')
-
-        get_url = 'PrismGateway/services/rest/v1/users/change_password'
-        json_data = '{"oldPassword":"NuUniv/4u#","newPassword":"'+passwd_var+'"}'
-        method = 'PUT'
-        user = 'admin'
-        passwd = 'NuUniv/4u#'
-        value = ""
-        response=get_json_data(server_address, get_url, json_data, method, user_name, passwd, value)
-        if "True" in response:
-            print("Password changed to "+passwd_var+" on PC "+server_address)
+        if not server_address in server_run_list:
+            server_run_list.append(server_address)
+            get_url = 'PrismGateway/services/rest/v1/users/change_password'
+            json_data = '{"oldPassword":"NuUniv/4u#","newPassword":"'+passwd_var+'"}'
+            method = 'PUT'
+            user = 'admin'
+            passwd = 'NuUniv/4u#'
+            value = ""
+            response=get_json_data(server_address, get_url, json_data, method, user_name, passwd, value)
+            if "True" in response:
+                print("Password changed to "+passwd_var+" on PC "+server_address)
