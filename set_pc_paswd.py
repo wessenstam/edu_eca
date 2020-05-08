@@ -97,7 +97,7 @@ for line in file_line:
             passwd = 'NuUniv/4u#'
             value = ""
             response=get_json_data(server_address, get_url, json_data, method, user_name, passwd, value)
-            if "true" in str(response).lower:
+            if "true" in str(response).lower():
                 print("Password changed to "+passwd_var+" on PC "+server_address)
             else:
                 print("Password not changed to " + passwd_var + " on PC " + server_address+"! Please check using the GUI!")
