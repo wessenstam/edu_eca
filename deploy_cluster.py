@@ -96,7 +96,7 @@ def deploy_cluster(server_ip,user,passwd):
     # 3. Upload the images
     source_ip = "10.42.11.100"
 
-    images = ("CentOS.qcow2","CubicDesignTools.iso","move-3.4.1.qcow2","Windows2012R2.qcow2")
+    images = ("CentOS.qcow2","CubicDesignTools.iso","move-3.5.0.qcow2","Windows2012R2.qcow2")
     for image_check in sorted(images):
         if "qcow2" in str(image_check):
             image_type="DISK_IMAGE"
