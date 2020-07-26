@@ -22,13 +22,6 @@ foreach ($vm in $Move_VM){
     echo "Removed VM $vm"
 }
 
-# Create 15 new machine from the W2K12R2 template
-for ($counter=1;$counter -le 15;$counter++){
-    New-VM -Template $Move_Templ -Datastore $datastore -DiskStorageFormat Thin -Name Move-$counter -Resourcepool Move| out-null
-    echo "Created VM Move-$counter"
-    start-vm -VM Move-$counter -RunASync| out-null
-    echo "Started VM Move-$counter"
-}
 
 # Stop the PC environments and return to the last snapshot
 $PC_vm=get-vm|where {$_.name -like 'PC*'}|select $_.name
@@ -43,6 +36,20 @@ foreach ($pc in $PC_vm){
     start-vm -VM $pc -RunAsync -confirm:$false| out-null
     echo "Starting VM $pc"
 }
+
+# Sleep 1 minute so the PCs can settle in
+echo "Sleep 1 minute so the PCs can settle in"
+sleep 60
+
+
+# Create 15 new machine from the W2K12R2 template
+for ($counter=1;$counter -le 15;$counter++){
+    New-VM -Template $Move_Templ -Datastore $datastore -DiskStorageFormat Thin -Name Move-$counter -Resourcepool Move| out-null
+    echo "Created VM Move-$counter"
+    start-vm -VM Move-$counter -RunASync| out-null
+    echo "Started VM Move-$counter"
+}
+
 
 
 # disconnect from vCenter
